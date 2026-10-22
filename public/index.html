@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Консоль CI/CD</title>
+<meta name="description" content="Десять учебных CI/CD пайплайнов в одном монорепозитории: сборка, проверки и публикация артефактов.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"></div>
+
+<header class="topbar">
+  <a class="brand" href="./">
+    <span class="brand__mark" aria-hidden="true">▚</span>
+    <span class="brand__name">zadanie<span class="brand__slash">/ci</span></span>
+  </a>
+
+  <nav class="nav" aria-label="Разделы страницы">
+    <a href="#console">Консоль</a>
+    <a href="#features">Пайплайны</a>
+    <a href="#counter">Счётчик</a>
+  </nav>
+
+  <button class="theme-toggle" type="button" data-theme-toggle>
+    <span class="theme-toggle__icon" aria-hidden="true">◐</span>
+    <span class="theme-toggle__label" data-theme-label>Тёмная</span>
+  </button>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>сборка · проверка · публикация</p>
+    <h1 class="hero__title">
+      Десять CI/CD пайплайнов<br>
+      <span class="hero__accent">в одном репозитории</span>
+    </h1>
+    <p class="hero__lead">
+      Rust, Go, Python, .NET, React — у каждого проекта свой сценарий
+      публикации: Docker-образ в GHCR, бинарники в Releases, сайт на Pages.
+      Сайт собран на голом HTML, CSS и JavaScript: ни сборщика, ни зависимостей.
+    </p>
+
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="#features">Смотреть пайплайны</a>
+      <a class="btn btn--ghost" href="#console">Открыть консоль</a>
+    </div>
+
+    <div class="snippet">
+      <code class="snippet__code" id="docker-cmd">docker pull ghcr.io/spleiii/zadanie/hello-rust:latest</code>
+      <button class="snippet__copy" type="button" data-copy="#docker-cmd" data-label="копировать">копировать</button>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Ключевые числа">
+    <div class="stat"><span class="stat__value">10</span><span class="stat__label">проектов</span></div>
+    <div class="stat"><span class="stat__value">10</span><span class="stat__label">пайплайнов</span></div>
+    <div class="stat"><span class="stat__value">5</span><span class="stat__label">стеков</span></div>
+    <div class="stat"><span class="stat__value">14</span><span class="stat__label">целей публикации</span></div>
+  </section>
+
+  <section class="panel" id="console">
+    <div class="panel__head">
+      <h2 class="panel__title">Консоль сборки</h2>
+      <span class="panel__badge">ubuntu-latest</span>
+    </div>
+    <p class="panel__hint">Живая имитация прогона пайплайна — перезапускается по кнопке.</p>
+
+    <div class="console">
+      <pre class="console__body" data-console aria-live="polite"></pre>
+      <div class="console__progress"><span class="console__progress-bar" data-progress></span></div>
+    </div>
+
+    <div class="console__actions">
+      <button class="btn btn--small" type="button" data-replay>Проиграть снова</button>
+      <span class="console__clock" data-clock>--:--:--</span>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <h2 class="section-title">Что умеет каждый пайплайн</h2>
+    <p class="section-lead">
+      Общая схема одинаковая: сначала проверки, затем сборка, и только потом
+      публикация артефакта.
+    </p>
+
+    <div class="cards">
+      <article class="card">
+        <span class="card__index">01</span>
+        <h3 class="card__title">Проверки</h3>
+        <p class="card__text">
+          Форматирование, линтинг и тесты. Пока хотя бы одна проверка не
+          прошла, артефакт не собирается.
+        </p>
+        <p class="card__meta">fmt · vet · clippy · ruff · pytest · xUnit</p>
+      </article>
+
+      <article class="card">
+        <span class="card__index">02</span>
+        <h3 class="card__title">Сборка</h3>
+        <p class="card__text">
+          Multi-stage Docker, кросс-компиляция под пять платформ, PyInstaller
+          или Vite — в зависимости от стека проекта.
+        </p>
+        <p class="card__meta">docker · GOOS/GOARCH · pyinstaller · vite</p>
+      </article>
+
+      <article class="card">
+        <span class="card__index">03</span>
+        <h3 class="card__title">Публикация</h3>
+        <p class="card__text">
+          Образы уходят в GHCR, бинарники — в Releases, статические файлы и
+          собранная SPA — на GitHub Pages.
+        </p>
+        <p class="card__meta">ghcr.io · releases · pages</p>
+      </article>
+
+      <article class="card">
+        <span class="card__index">04</span>
+        <h3 class="card__title">Гейтинг</h3>
+        <p class="card__text">
+          Job публикации запускается только после успешных проверок: цепочка
+          <code>needs</code> не даёт собрать релиз из сломанного кода.
+        </p>
+        <p class="card__meta">needs · paths · environment</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="panel counter" id="counter">
+    <div class="panel__head">
+      <h2 class="panel__title">Счётчик сборок</h2>
+      <span class="panel__badge">localStorage</span>
+    </div>
+    <p class="panel__hint">
+      Счётчик переживает перезагрузку страницы — значение хранится в
+      браузере, а не на сервере.
+    </p>
+
+    <div class="counter__body">
+      <output class="counter__value" data-counter>0</output>
+      <div class="counter__buttons">
+        <button class="btn btn--small" type="button" data-counter-add>+1</button>
+        <button class="btn btn--small btn--ghost" type="button" data-counter-reset>сброс</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>Опубликовано из <span class="footer__path">projects/hello-static</span> · деплой по push в <code>main</code></p>
+</footer>
+
+<script src="./script.js"></script>
+</body>
+</html>
